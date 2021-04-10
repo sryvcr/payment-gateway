@@ -2,6 +2,34 @@ from rest_framework import serializers
 from ..models import CreditCard
 
 
+class CreditCardSerializer(serializers.ModelSerializer):
+    uid = serializers.SerializerMethodField()
+    card_number = serializers.CharField()
+    franchise = serializers.CharField()
+    due_date = serializers.CharField()
+    created_date = serializers.DateTimeField()
+
+    class Meta:
+        model = CreditCard
+        fields = (
+            'uid',
+            'card_number',
+            'franchise',
+            'due_date',
+            'created_date',
+        )
+        read_only_fields = (
+            'uid',
+            'card_number',
+            'franchise',
+            'due_date',
+            'created_date',
+        )
+
+    def get_uid(self, obj):
+        return obj.id
+
+
 class CreditCardCreateSerializer(serializers.ModelSerializer):
     uid = serializers.SerializerMethodField()
     franchise = serializers.CharField()
