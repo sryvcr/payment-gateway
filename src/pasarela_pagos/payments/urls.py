@@ -7,6 +7,7 @@ from .views import (
 from .view.users import (
     UserGetByPk,
     UserCreateOneView,
+    UserUpdateOneView,
     UserDeleteOneView,
 )
 
@@ -18,5 +19,6 @@ urlpatterns = [
 
     path('users/get-one/<str:uid>', view=UserGetByPk.as_view(), name='user_get_one'),
     path('users/create-one', view=UserCreateOneView.as_view(), name='user_create_one'),
+    path('users/update-one/<str:uid>', view=UserUpdateOneView.as_view(), name='user_update_one'),
     path('users/delete-one/<str:uid>', view=UserDeleteOneView.as_view(), name='user_delete_one'),
 ]
