@@ -5,6 +5,7 @@ from .views import (
     CreditCardDeleteOneView
 )
 from .view.users import (
+    UserGetByPk,
     UserCreateOneView
 )
 
@@ -14,5 +15,6 @@ urlpatterns = [
     path('credit-cards/create-one', view=CreditCardCreateOneView.as_view(), name='credit_card_create_one'),
     path('credit-cards/delete-one/<str:uid>', view=CreditCardDeleteOneView.as_view(), name='credit_card_delete_one'),
 
-    path('users/create-one', view=UserCreateOneView.as_view(), name='credit_card_create_one')
+    path('users/get-one/<str:uid>', view=UserGetByPk.as_view(), name='user_get_one'),
+    path('users/create-one', view=UserCreateOneView.as_view(), name='user_create_one')
 ]
