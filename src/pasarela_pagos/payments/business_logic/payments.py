@@ -5,6 +5,14 @@ from pasarela_pagos.payments.models import (
 )
 
 
+def get_payment_by_id(id: str) -> Payment:
+    try:
+        payment = Payment.objects.get(pk=id)
+        return payment
+    except Exception as e:
+        raise e
+
+
 @transaction.atomic()
 def create_payment(
     value_after_iva: int,

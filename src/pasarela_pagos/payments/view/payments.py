@@ -3,12 +3,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from pasarela_pagos.payments.business_logic.payments import (
+    get_payment_by_id,
     create_payment
 )
 from pasarela_pagos.payments.serializers.payment import (
+    PaymentSerializer,
     PaymentCreateSerializer
 )
 from pasarela_pagos.payments.utils.make_response import make_response
+
+
+class PaymentGetByPkView(APIView):
+
+    def get(self, request, uid: str):
+        try:
+            try:
+                payment = get_payment_by_id(uid)
+                serializer = PaymentSerializer(payment)
+                response = make_response(status.HTTP_200_OK, serializer.data)
+                return Response(status=status.HTTP_200_OK, data=response)
+            except:
+                response = make_response(status.HTTP_404_NOT_FOUND, {})
+                return Response(status=status.HTTP_404_NOT_FOUND, data=response)
+        except Exception as e:
+            print('error:', e)
+            response = make_response(status.HTTP_400_BAD_REQUEST, str(e))
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=response)
 
 
 class PaymentCreateOneView(APIView):
