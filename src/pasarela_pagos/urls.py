@@ -19,5 +19,5 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('credit-cards/', include('pasarela_pagos.payments.urls')),
+    path('', include('pasarela_pagos.payments.urls')),
 ]
