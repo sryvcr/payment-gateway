@@ -24,3 +24,11 @@ def create_user(fullname: str, email: str) -> User:
         return user
     except Exception as e:
         raise e
+
+
+def delete_user(user: User) -> bool:
+    try:
+        user.delete()
+        return True
+    except Exception as e:
+        raise e
