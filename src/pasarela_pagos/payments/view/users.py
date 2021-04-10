@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from pasarela_pagos.payments.business_logic.users import (
     get_user_by_id,
+    get_credit_cards_by_user_id,
     create_user,
     link_credit_card,
     create_payment_token,
@@ -16,6 +17,9 @@ from pasarela_pagos.payments.serializers.user import (
     LinkCreditCardSerializer,
     PaymentTokenSerializer
 )
+from pasarela_pagos.payments.serializers.credit_card import (
+    CreditCardSerializer,
+)
 from pasarela_pagos.payments.utils.make_response import make_response
 
 
@@ -27,6 +31,26 @@ class UserGetByPk(APIView):
                 user = get_user_by_id(uid)
                 serializer = UserSerializer(user)
                 response = make_response(status.HTTP_200_OK, serializer.data)
+                return Response(status=status.HTTP_200_OK, data=response)
+            except:
+                response = make_response(status.HTTP_404_NOT_FOUND, {})
+                return Response(status=status.HTTP_404_NOT_FOUND, data=response)
+        except Exception as e:
+            print('error:', e)
+            response = make_response(status.HTTP_400_BAD_REQUEST, str(e))
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=response)
+
+
+class CreditCardsGetByUserId(APIView):
+
+    def get(self, request, uid: str):
+        try:
+            try:
+                import pdb; pdb.set_trace()
+                credit_cards = get_credit_cards_by_user_id(uid)
+                serializer = CreditCardSerializer(credit_cards, many=True)
+                response = make_response(status.HTTP_200_OK, serializer.data)
+                print(response)
                 return Response(status=status.HTTP_200_OK, data=response)
             except:
                 response = make_response(status.HTTP_404_NOT_FOUND, {})

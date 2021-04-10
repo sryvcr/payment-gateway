@@ -2,8 +2,9 @@ import uuid
 from pasarela_pagos.payments.helpers.email_checker import email_check
 from pasarela_pagos.payments.models import (
     User,
+    CreditCard,
     UserCreditCard,
-    PaymentToken
+    PaymentToken,
 )
 
 
@@ -11,6 +12,18 @@ def get_user_by_id(id: str) -> User:
     try:
         user = User.objects.get(pk=id)
         return user
+    except Exception as e:
+        raise e
+
+
+def get_credit_cards_by_user_id(id: str) -> User:
+    try:
+        users_credit_cards = UserCreditCard.objects.filter(user_id=id).all()
+        credit_cards_id = [str(user_credit_card.credit_card_id) for user_credit_card in users_credit_cards]
+        credit_cards = CreditCard.objects.filter(
+            id__in=credit_cards_id
+        )
+        return credit_cards
     except Exception as e:
         raise e
 
