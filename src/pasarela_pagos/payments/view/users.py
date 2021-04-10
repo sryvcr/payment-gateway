@@ -6,13 +6,15 @@ from pasarela_pagos.payments.business_logic.users import (
     get_user_by_id,
     create_user,
     link_credit_card,
+    create_payment_token,
     update_user,
     delete_user
 )
 from pasarela_pagos.payments.serializers.user import (
     UserSerializer,
     UserCreateSerializer,
-    LinkCreditCardSerializer
+    LinkCreditCardSerializer,
+    PaymentTokenSerializer
 )
 from pasarela_pagos.payments.utils.make_response import make_response
 
@@ -63,6 +65,23 @@ class LinkCreditCardView(APIView):
                 user_id=body['user_id']
             )
             serializer = LinkCreditCardSerializer(user_link_credit_card)
+            response = make_response(status.HTTP_201_CREATED, serializer.data)
+            return Response(status=status.HTTP_201_CREATED, data=response)
+        except Exception as e:
+            print('error:', e)
+            response = make_response(status.HTTP_400_BAD_REQUEST, str(e))
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=response)
+
+
+class PaymentTokenCreateView(APIView):
+
+    def post(self, request):
+        try:
+            body = json.loads(request.body)
+            payment_token = create_payment_token(
+                user_credit_card_id=body['user_credit_card_id'],
+            )
+            serializer = PaymentTokenSerializer(payment_token)
             response = make_response(status.HTTP_201_CREATED, serializer.data)
             return Response(status=status.HTTP_201_CREATED, data=response)
         except Exception as e:

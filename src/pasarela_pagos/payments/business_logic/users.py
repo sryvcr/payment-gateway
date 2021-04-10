@@ -1,8 +1,9 @@
+import uuid
 from pasarela_pagos.payments.helpers.email_checker import email_check
 from pasarela_pagos.payments.models import (
     User,
-    CreditCard,
-    UserCreditCard
+    UserCreditCard,
+    PaymentToken
 )
 
 
@@ -56,6 +57,22 @@ def update_user(id: str, update_info: dict) -> bool:
             user.email = update_info['email']
         user.save()
         return user
+    except Exception as e:
+        raise e
+
+
+def create_payment_token(user_credit_card_id: str):
+    try:
+        link_exists = UserCreditCard.objects.filter(id=user_credit_card_id).first()
+        if not link_exists:
+            raise Exception('user credit card does not exist')
+        unique_token = uuid.uuid3(uuid.NAMESPACE_DNS, user_credit_card_id)
+        payment_token = PaymentToken(
+            token=unique_token,
+            used=False,
+        )
+        payment_token.save()
+        return payment_token
     except Exception as e:
         raise e
 

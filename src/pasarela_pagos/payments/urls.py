@@ -8,6 +8,7 @@ from .view.users import (
     UserGetByPk,
     UserCreateOneView,
     LinkCreditCardView,
+    PaymentTokenCreateView,
     UserUpdateOneView,
     UserDeleteOneView,
 )
@@ -21,6 +22,7 @@ urlpatterns = [
     path('users/get-one/<str:uid>', view=UserGetByPk.as_view(), name='user_get_one'),
     path('users/create-one', view=UserCreateOneView.as_view(), name='user_create_one'),
     path('users/link-credit-card', view=LinkCreditCardView.as_view(), name='user_link_credit_card'),
+    path('users/create-payment-token', view=PaymentTokenCreateView.as_view(), name='user_link_credit_card'),
     path('users/update-one/<str:uid>', view=UserUpdateOneView.as_view(), name='user_update_one'),
     path('users/delete-one/<str:uid>', view=UserDeleteOneView.as_view(), name='user_delete_one'),
 ]
