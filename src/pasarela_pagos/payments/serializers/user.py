@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pasarela_pagos.payments.models import User
+from pasarela_pagos.payments.models import User, UserCreditCard
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -43,4 +43,23 @@ class UserCreateSerializer(serializers.ModelSerializer):
         )
 
     def get_uid(self, obj):
+        return obj.id
+
+
+class LinkCreditCardSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField()
+    created_date = serializers.DateTimeField()
+
+    class Meta:
+        model = UserCreditCard
+        fields = (
+            'token',
+            'created_date',
+        )
+        read_only_fields = (
+            'token',
+            'created_date',
+        )
+
+    def get_token(self, obj):
         return obj.id

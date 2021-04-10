@@ -5,12 +5,14 @@ from rest_framework import status
 from pasarela_pagos.payments.business_logic.users import (
     get_user_by_id,
     create_user,
+    link_credit_card,
     update_user,
     delete_user
 )
 from pasarela_pagos.payments.serializers.user import (
     UserSerializer,
-    UserCreateSerializer
+    UserCreateSerializer,
+    LinkCreditCardSerializer
 )
 from pasarela_pagos.payments.utils.make_response import make_response
 
@@ -43,6 +45,24 @@ class UserCreateOneView(APIView):
                 email=body['email']
             )
             serializer = UserCreateSerializer(user)
+            response = make_response(status.HTTP_201_CREATED, serializer.data)
+            return Response(status=status.HTTP_201_CREATED, data=response)
+        except Exception as e:
+            print('error:', e)
+            response = make_response(status.HTTP_400_BAD_REQUEST, str(e))
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=response)
+
+
+class LinkCreditCardView(APIView):
+
+    def post(self, request):
+        try:
+            body = json.loads(request.body)
+            user_link_credit_card = link_credit_card(
+                credit_card_id=body['credit_card_id'],
+                user_id=body['user_id']
+            )
+            serializer = LinkCreditCardSerializer(user_link_credit_card)
             response = make_response(status.HTTP_201_CREATED, serializer.data)
             return Response(status=status.HTTP_201_CREATED, data=response)
         except Exception as e:
