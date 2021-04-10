@@ -2,3 +2,8 @@
 bin/
 lib/
 pyvenv.cfg
+
+.env
+*.pyc
+*__pycache__/
+*.vscode/
