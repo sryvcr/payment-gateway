@@ -47,71 +47,36 @@ class PaymentSerializer(serializers.ModelSerializer):
     def get_uid(self, obj):
         return obj.id
 
-class PaymentCreateSerializer(serializers.ModelSerializer):
+class PaymentCreateSerializer(PaymentSerializer):
     uid = serializers.SerializerMethodField()
     status = serializers.CharField()
     created_date = serializers.DateTimeField()
 
-    class Meta:
-        model = Payment
+    class Meta(PaymentSerializer.Meta):
         fields = (
             'uid',
             'status',
-            'created_date',
+            'created_date'
         )
         read_only_fields = (
             'uid',
             'status',
-            'created_date',
+            'created_date'
         )
 
     def get_uid(self, obj):
         return obj.id
 
 
-class RepaymentSerializer(serializers.ModelSerializer):
-    uid = serializers.SerializerMethodField()
-    value_after_iva = serializers.IntegerField()
-    value_total = serializers.IntegerField()
-    iva = serializers.IntegerField()
-    status = serializers.CharField()
-    user_id = serializers.CharField()
-    payment_token = serializers.CharField()
-    dues = serializers.IntegerField()
-    payment_reference = serializers.CharField()
-    webhook_url = serializers.CharField()
-    created_date = serializers.DateTimeField()
+class RepaymentSerializer(PaymentSerializer):
     repayments = serializers.SerializerMethodField()
 
-    class Meta:
-        model = Payment
-        fields = (
-            'uid',
-            'value_after_iva',
-            'value_total',
-            'iva',
-            'status',
-            'user_id',
-            'payment_token',
-            'dues',
-            'payment_reference',
-            'webhook_url',
-            'created_date',
-            'repayments'
+    class Meta(PaymentSerializer.Meta):
+        fields = PaymentSerializer.Meta.fields + (
+            'repayments',
         )
-        read_only_fields = (
-            'uid',
-            'value_after_iva',
-            'value_total',
-            'iva',
-            'status',
-            'user_id',
-            'payment_token',
-            'dues',
-            'payment_reference',
-            'webhook_url',
-            'created_date',
-            'repayments'
+        read_only_fields = PaymentSerializer.Meta.read_only_fields + (
+            'repayments',
         )
 
     def get_uid(self, obj):
