@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import (
+from .views.credit_cards import (
     CreditCardGetByPk,
     CreditCardCreateOneView,
     CreditCardDeleteOneView
 )
-from .view.users import (
+from .views.users import (
     UserGetByPk,
     CreditCardsGetByUserId,
     UserCreateOneView,
@@ -13,7 +13,7 @@ from .view.users import (
     UserUpdateOneView,
     UserDeleteOneView,
 )
-from .view.payments import (
+from .views.payments import (
     PaymentGetByPkView,
     PaymentCreateOneView,
     RepaymentCreateOneView
