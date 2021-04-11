@@ -2,16 +2,16 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from pasarela_pagos.payments.business_logic.credit_cards import (
+from payment_gateway.payments.business_logic.credit_cards import (
     get_credit_card_by_id,
     create_credit_card,
     delete_credit_card
 )
-from pasarela_pagos.payments.serializers.credit_card import (
+from payment_gateway.payments.serializers.credit_card import (
     CreditCardSerializer,
     CreditCardCreateSerializer
 )
-from pasarela_pagos.payments.utils.make_response import make_response
+from payment_gateway.payments.utils.make_response import make_response
 
 
 class CreditCardGetByPk(APIView):

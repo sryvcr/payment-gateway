@@ -2,18 +2,18 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from pasarela_pagos.payments.business_logic.payments import (
+from payment_gateway.payments.business_logic.payments import (
     get_payment_by_id,
     create_payment,
     create_repayment
 )
-from pasarela_pagos.payments.models.payments import Repayment
-from pasarela_pagos.payments.serializers.payment import (
+from payment_gateway.payments.models.payments import Repayment
+from payment_gateway.payments.serializers.payment import (
     PaymentSerializer,
     PaymentCreateSerializer,
     RepaymentSerializer
 )
-from pasarela_pagos.payments.utils.make_response import make_response
+from payment_gateway.payments.utils.make_response import make_response
 
 
 class PaymentGetByPkView(APIView):

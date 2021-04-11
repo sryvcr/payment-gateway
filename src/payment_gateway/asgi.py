@@ -1,5 +1,5 @@
 """
-ASGI config for pasarela_pagos project.
+ASGI config for payment_gateway project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pasarela_pagos.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'payment_gateway.settings')
 
 application = get_asgi_application()

@@ -1,6 +1,6 @@
 from typing import List, Union
 from django.db import transaction
-from pasarela_pagos.payments.models import (
+from payment_gateway.payments.models import (
     Payment,
     PaymentToken,
     Repayment

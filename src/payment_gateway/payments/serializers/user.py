@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pasarela_pagos.payments.models import (
+from payment_gateway.payments.models import (
     User,
     UserCreditCard,
     PaymentToken

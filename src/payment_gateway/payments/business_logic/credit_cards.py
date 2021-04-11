@@ -1,6 +1,6 @@
-from pasarela_pagos.payments.models import CreditCard
-from pasarela_pagos.payments.helpers.luhn_checker import is_luhn_valid
-from pasarela_pagos.payments.helpers.franchise_checker import franchise_checker
+from payment_gateway.payments.models import CreditCard
+from payment_gateway.payments.helpers.luhn_checker import is_luhn_valid
+from payment_gateway.payments.helpers.franchise_checker import franchise_checker
 
 
 def get_credit_card_by_id(id: str) -> CreditCard:

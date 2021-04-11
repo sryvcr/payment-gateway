@@ -1,7 +1,7 @@
 import uuid
 import datetime
-from pasarela_pagos.payments.helpers.email_checker import email_check
-from pasarela_pagos.payments.models import (
+from payment_gateway.payments.helpers.email_checker import email_check
+from payment_gateway.payments.models import (
     User,
     CreditCard,
     UserCreditCard,

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pasarela_pagos.payments.models import Payment, Repayment
+from payment_gateway.payments.models import Payment, Repayment
 
 
 class PaymentSerializer(serializers.ModelSerializer):

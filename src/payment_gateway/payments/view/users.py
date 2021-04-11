@@ -2,7 +2,7 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from pasarela_pagos.payments.business_logic.users import (
+from payment_gateway.payments.business_logic.users import (
     get_user_by_id,
     get_credit_cards_by_user_id,
     create_user,
@@ -11,16 +11,16 @@ from pasarela_pagos.payments.business_logic.users import (
     update_user,
     delete_user
 )
-from pasarela_pagos.payments.serializers.user import (
+from payment_gateway.payments.serializers.user import (
     UserSerializer,
     UserCreateSerializer,
     LinkCreditCardSerializer,
     PaymentTokenSerializer
 )
-from pasarela_pagos.payments.serializers.credit_card import (
+from payment_gateway.payments.serializers.credit_card import (
     CreditCardSerializer,
 )
-from pasarela_pagos.payments.utils.make_response import make_response
+from payment_gateway.payments.utils.make_response import make_response
 
 
 class UserGetByPk(APIView):

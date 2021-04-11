@@ -1,4 +1,4 @@
-"""pasarela_pagos URL Configuration
+"""payment_gateway URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -19,5 +19,5 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('pasarela_pagos.payments.urls')),
+    path('', include('payment_gateway.payments.urls')),
 ]
