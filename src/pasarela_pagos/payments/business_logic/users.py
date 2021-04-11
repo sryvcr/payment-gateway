@@ -1,4 +1,5 @@
 import uuid
+import datetime
 from pasarela_pagos.payments.helpers.email_checker import email_check
 from pasarela_pagos.payments.models import (
     User,
@@ -79,9 +80,11 @@ def create_payment_token(user_credit_card_id: str):
         link_exists = UserCreditCard.objects.filter(id=user_credit_card_id).first()
         if not link_exists:
             raise Exception('user credit card does not exist')
-        unique_token = uuid.uuid3(uuid.NAMESPACE_DNS, user_credit_card_id)
+        token_string = f'{user_credit_card_id}.{datetime.datetime.now()}'
+        unique_token = uuid.uuid3(uuid.NAMESPACE_DNS, token_string)
         payment_token = PaymentToken(
             token=unique_token,
+            user_credit_card_id=user_credit_card_id,
             used=False,
         )
         payment_token.save()
