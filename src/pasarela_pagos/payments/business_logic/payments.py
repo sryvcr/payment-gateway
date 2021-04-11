@@ -1,7 +1,9 @@
+from typing import List, Union
 from django.db import transaction
 from pasarela_pagos.payments.models import (
     Payment,
-    PaymentToken
+    PaymentToken,
+    Repayment
 )
 
 
@@ -44,9 +46,41 @@ def create_payment(
         raise e
 
 
+@transaction.atomic()
+def create_repayment(payment_id: str, reason: str, value: int) -> List[Union[Payment, Repayment]]:
+    try:
+        repayment_value_total = 0
+        payment = Payment.objects.filter(id=payment_id).first()
+        if not payment:
+            raise Exception('payment does not exist')
+        if value > payment.value_total:
+            raise Exception('current repayment value exceeds the payment value')
+        repayments = Repayment.objects.filter(payment_id=payment_id).all()
+        if repayments:
+            for repayment in repayments:
+                repayment_value_total += repayment.value
+        if repayment_value_total + value > payment.value_total:
+            raise Exception('current repayment value with previous repayments exceeds the payment value')
+        repayment = Repayment(
+            payment_id=payment_id,
+            reason=reason,
+            value=value
+        )
+        repayment.save()
+        if payment.status != payment.REVERSED:
+            payment.status = payment.REVERSED
+            payment.save()
+        return payment
+    except Exception as e:
+        raise e
+
+
 def validate_payment_token(payment_token: str) -> PaymentToken:
     try:
-        token = PaymentToken.objects.filter(token=payment_token).first()
+        token = PaymentToken.objects.filter(
+            token=payment_token,
+            used=False
+        ).first()
         if not token:
             raise Exception('payment token does not exist')
         if token.used:

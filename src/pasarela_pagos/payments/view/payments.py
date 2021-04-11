@@ -4,11 +4,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from pasarela_pagos.payments.business_logic.payments import (
     get_payment_by_id,
-    create_payment
+    create_payment,
+    create_repayment
 )
+from pasarela_pagos.payments.models.payments import Repayment
 from pasarela_pagos.payments.serializers.payment import (
     PaymentSerializer,
-    PaymentCreateSerializer
+    PaymentCreateSerializer,
+    RepaymentSerializer
 )
 from pasarela_pagos.payments.utils.make_response import make_response
 
@@ -47,6 +50,25 @@ class PaymentCreateOneView(APIView):
                 webhook_url=body['webhook_url']
             )
             serializer = PaymentCreateSerializer(payment)
+            response = make_response(status.HTTP_201_CREATED, serializer.data)
+            return Response(status=status.HTTP_201_CREATED, data=response)
+        except Exception as e:
+            print('error:', e)
+            response = make_response(status.HTTP_400_BAD_REQUEST, str(e))
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=response)
+
+
+class RepaymentCreateOneView(APIView):
+
+    def post(self, request):
+        try:
+            body = json.loads(request.body)
+            payment = create_repayment(
+                payment_id=body['payment_id'],
+                reason=body['reason'],
+                value=body['value']
+            )
+            serializer = RepaymentSerializer(payment)
             response = make_response(status.HTTP_201_CREATED, serializer.data)
             return Response(status=status.HTTP_201_CREATED, data=response)
         except Exception as e:

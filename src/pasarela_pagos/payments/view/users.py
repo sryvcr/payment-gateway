@@ -46,7 +46,6 @@ class CreditCardsGetByUserId(APIView):
     def get(self, request, uid: str):
         try:
             try:
-                import pdb; pdb.set_trace()
                 credit_cards = get_credit_cards_by_user_id(uid)
                 serializer = CreditCardSerializer(credit_cards, many=True)
                 response = make_response(status.HTTP_200_OK, serializer.data)

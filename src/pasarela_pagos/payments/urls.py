@@ -15,7 +15,8 @@ from .view.users import (
 )
 from .view.payments import (
     PaymentGetByPkView,
-    PaymentCreateOneView
+    PaymentCreateOneView,
+    RepaymentCreateOneView
 )
 
 
@@ -34,4 +35,5 @@ urlpatterns = [
 
     path('payments/get-one/<str:uid>', view=PaymentGetByPkView.as_view(), name='payment_get_one'),
     path('payments/create-one', view=PaymentCreateOneView.as_view(), name='payment_create_one'),
+    path('repayments/create-one', view=RepaymentCreateOneView.as_view(), name='repayment_create_one'),
 ]

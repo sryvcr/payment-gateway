@@ -31,3 +31,17 @@ class Payment(models.Model):
     payment_reference = models.CharField(max_length=40)
     webhook_url = models.URLField()
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class Repayment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    payment = models.ForeignKey(
+        'payments.Payment',
+        related_name='payment',
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False,
+    )
+    reason = models.CharField(max_length=100, blank=True, null=True)
+    value = models.IntegerField()
+    created_date = models.DateTimeField(auto_now_add=True)
